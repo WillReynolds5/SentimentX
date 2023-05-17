@@ -1,13 +1,12 @@
-import os
-import csv
-
 import argparse
-import requests
+import csv
+import os
 from typing import Any, List
-from langchain import OpenAI
-from langchain.chat_models import ChatOpenAI
-from dotenv import load_dotenv
+
+import requests
 from bs4 import BeautifulSoup
+from dotenv import load_dotenv
+from langchain.chat_models import ChatOpenAI
 
 from chain import extract_data_chain
 

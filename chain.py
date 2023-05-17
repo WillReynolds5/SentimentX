@@ -1,11 +1,10 @@
 import re
+from typing import Any
 
-from langchain.text_splitter import TokenTextSplitter
 from langchain.docstore.document import Document
 from langchain.output_parsers import StructuredOutputParser, ResponseSchema
 from langchain.prompts import ChatPromptTemplate, HumanMessagePromptTemplate
-
-from typing import Any
+from langchain.text_splitter import TokenTextSplitter
 
 text_splitter = TokenTextSplitter()
 
