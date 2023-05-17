@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>SentimentX💰📈🤖 README</title>
-</head>
 <body>
     <h1>SentimentX💰📈🤖</h1>
     <p>SentimentX is a command-line application designed to extract structured data from financial news sources. It retrieves an article from the provided URL(s), extracts its text, and then applies sentiment analysis to the text. The sentiment score, along with other useful article information, is returned in a JSON format.</p>

@@ -32,7 +32,7 @@ class SentimentX:
         if not self.api_key:
             raise ValueError("OPENAI_API_KEY environment variable is not set")
 
-        self.llm = ChatOpenAI()
+        self.llm = ChatOpenAI(temperature=1)
 
     def extract_signal(self, data: str) -> Any:
         # placeholder for the actual function implementation
@@ -62,7 +62,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     sentimentx = SentimentX()
-    sentimentx.run(args.url)
+    sentimentx.run(args.url, args.csv)
 
 
 # python sentimentx.py --url https://www.cnbc.com/2023/05/16/elon-musk-cnbc-interview-with-david-faber.html
