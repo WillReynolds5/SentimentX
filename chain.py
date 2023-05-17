@@ -77,13 +77,9 @@ def clean_model_output(text: str) -> str:
         cleaned_text: cleaned output from the langchain API
     """
 
-    pattern = re.compile('.*?', re.DOTALL)
-    matches = pattern.findall(text)[0]
-
-    if matches:
-        llm_block = matches[0]
-        print(llm_block)
-        return llm_block
+    match = re.search('```json(.*?)```', text, re.DOTALL)
+    if match:
+        cleaned_output = match.group(1).strip()
+        return "```json"+cleaned_output+"```"
     else:
-        print('No code block found in text.')
         raise ValueError('No code block found in text.')

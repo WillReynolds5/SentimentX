@@ -1,4 +1,5 @@
 import os
+import csv
 
 import argparse
 import requests
@@ -44,14 +45,20 @@ class SentimentX:
         soup = BeautifulSoup(response.content, 'html.parser')
         return soup.get_text(strip=True)
 
-    def run(self, urls: List[str], csv: str = None):
+    def run(self, urls: List[str], csv_fname: str = None):
         for url in urls:
             content = self.get_article_content(url)
             data = self.extract_signal(content)
             # save the json to csv file
-            if csv:
-                with open(csv, 'a') as f:
-                    f.write(data)
+            if csv_fname:
+                with open(csv_fname, 'w') as f:
+                    writer = csv.writer(f)
+
+                    # Write the header (optional)
+                    writer.writerow(data.keys())
+
+                    # Write the data
+                    writer.writerow(data.values())
 
             return data
 
@@ -63,6 +70,3 @@ if __name__ == "__main__":
 
     sentimentx = SentimentX()
     sentimentx.run(args.url, args.csv)
-
-
-# python sentimentx.py --url https://www.cnbc.com/2023/05/16/elon-musk-cnbc-interview-with-david-faber.html
