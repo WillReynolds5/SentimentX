@@ -1,0 +1,2 @@
+# SentimentX
+ Financial News Analyzer   
