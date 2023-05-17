@@ -2,7 +2,7 @@ import os
 
 import argparse
 import requests
-from typing import Any
+from typing import Any, List
 from langchain import OpenAI
 from langchain.chat_models import ChatOpenAI
 from dotenv import load_dotenv
@@ -44,20 +44,20 @@ class SentimentX:
         soup = BeautifulSoup(response.content, 'html.parser')
         return soup.get_text(strip=True)
 
+    def run(self, urls: List[str], csv: str = None):
+        for url in urls:
+            content = self.get_article_content(url)
+            data = self.extract_signal(content)
+            # save the json to csv file
+            if csv:
+                with open(csv, 'a') as f:
+                    f.write(data)
 
-    def run(self, url: str, csv: str = None):
-        content = self.get_article_content(url)
-        data = self.extract_signal(content)
-        # save the json to csv file
-        if csv:
-            with open(csv, 'w') as f:
-                f.write(data)
-
-        return data
+            return data
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='SentimentX - News Article Sentiment Analysis.')
-    parser.add_argument('--url', type=str, required=True, help='URL to the news article.')
+    parser.add_argument('--url', nargs='+', required=True, help='URL(s) to the news article.')
     parser.add_argument('--csv', type=str, required=False, help='Saves the json to a csv file instead of printing to stdout.')
     args = parser.parse_args()
 

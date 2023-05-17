@@ -14,8 +14,8 @@ response_schemas = [
     ResponseSchema(name="publisher", description="organization that published the article"),
     ResponseSchema(name="title", description="title of the article"),
     ResponseSchema(name="tickers", description="list of tickers mentioned in the article"),
-    ResponseSchema(name="sentimentScore", description="sentiment score of the article, rate between 1-10"),
-    ResponseSchema(name="marketImpact", description="market impact score of the article, rate between 1-10"),
+    ResponseSchema(name="sentimentScore", description="rate the sentiment of the article (1-10) 1 is terrible negative article and 10 is extremely positive article"),
+    ResponseSchema(name="marketImpact", description="rate the market impact score of the article (1-10) 1 is no probable impact and 10 is extremely impactful"),
 ]
 
 output_parser = StructuredOutputParser.from_response_schemas(response_schemas)
@@ -42,16 +42,17 @@ def extract_data_chain(llm: Any, data: str) -> Any:
     texts = text_splitter.split_text(data)
     docs = [Document(page_content=t) for t in texts]
 
-    # works
+
     extracted_data = None
     for doc in docs:
         if extracted_data:
             _input = refine_prompt.format_prompt(article=doc.page_content, json_data=extracted_data)
             output = llm(_input.to_messages())
-            extracted_data = output_parser.parse(output)
+            extracted_data = output_parser.parse(output.content)
         else:
             _input = prompt.format_prompt(article=doc.page_content)
             output = llm(_input.to_messages())
-            extracted_data = output_parser.parse(output)
+            print(output.content)
+            extracted_data = output_parser.parse(output.content)
 
     return extracted_data
