@@ -11,22 +11,22 @@
     <code>OPENAI_API_KEY=sk-1sdf2s...</code>
     <p>Replace <code>sk-1sdf2s...</code> with your actual OpenAI API key.</p>
     <h2>Running SentimentX</h2>
-    <p>To run SentimentX, use the following command:</p>
-    <code>python sentimentx.py --url https://www.cnbc.com/2023/05/16/elon-musk-cnbc-interview-with-david-faber.html https://www.bbc.com/news/business-57139414</code>
+    <p>To run SentimentX, use the following command (to pass multiple urls, separate by space):</p>
+    <code>python sentimentx.py --url https://www.cnbc.com/2023/05/17/google-to-use-new-ai-models-for-ads-and-to-help-youtube-creators.html https://www.cnbc.com/2023/05/17/amazons-alexa-head-defends-companys-work-on-ai-amid-chatgpt-boom.html</code>
     <p>You can also pass multiple URLs to the --url argument.</p>
     <h2>Sample Output</h2>
     <p>Here is a sample output:</p>
     <pre>
-{
-    "authors": ["Susan Heavey", "Doina Chiacu", "Andrea Shalal"],
-    "date": "2023-05-17T18:12:00.000Z",
-    "summary": "President Joe Biden and top U.S. congressional Republican Kevin McCarthy on Wednesday underscored their determination to reach a deal soon to raise the federal government's $31.4 trillion debt ceiling and avoid an economically catastrophic default.",
-    "publisher": "Reuters",
-    "title": "Biden, McCarthy push forward towards deal on US debt ceiling",
-    "tickers": [],
-    "sentimentScore": "5",
-    "marketImpact": "7"
-}
+    {
+      "authors": ["Jennifer Elias"],
+      "date": "2023-05-17T16:30:00.000Z",
+      "summary": "Google has approved several ad-related artificial intelligence projects to help advertisers and YouTube creators, internal documents show. The company also plans to automate some customer service for its products using new AI models. Google is working on its own internal Stable Diffusion-like product for image creation.",
+      "publisher": "CNBC",
+      "title": "Google plans to use new A.I. models for ads and to help YouTube creators, sources say",
+      "tickers": ["GOOGL"],
+      "sentimentScore": "6",
+      "marketImpact": "5"
+    }
     </pre>
     <h2>Saving Output to CSV</h2>
     <p>You can save the output to a CSV file by passing the --csv flag along with a filename:</p>

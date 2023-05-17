@@ -46,21 +46,27 @@ class SentimentX:
         return soup.get_text(strip=True)
 
     def run(self, urls: List[str], csv_fname: str = None):
+        article_data = []
         for url in urls:
             content = self.get_article_content(url)
-            data = self.extract_signal(content)
-            # save the json to csv file
-            if csv_fname:
-                with open(csv_fname, 'w') as f:
-                    writer = csv.writer(f)
+            structured_data = self.extract_signal(content)
+            structured_data['url'] = url
+            article_data.append(structured_data)
 
-                    # Write the header (optional)
-                    writer.writerow(data.keys())
+        if csv_fname:
+            with open(csv_fname, 'w', newline='') as f:
+                # Get the field names from the keys of the first dictionary in the list
+                fieldnames = article_data[0].keys()
+                writer = csv.DictWriter(f, fieldnames)
 
-                    # Write the data
-                    writer.writerow(data.values())
+                # Write the header (optional)
+                writer.writeheader()
 
-            return data
+                # Write each dictionary to a new row
+                for data in article_data:
+                    writer.writerow(data)
+
+        return article_data
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='SentimentX - News Article Sentiment Analysis.')
@@ -69,4 +75,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     sentimentx = SentimentX()
-    sentimentx.run(args.url, args.csv)
+    data = sentimentx.run(args.url, args.csv)
+    print(data)
